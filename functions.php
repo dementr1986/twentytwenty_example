@@ -815,7 +815,8 @@ function true_option_settings() {
 		'label_for' => 'my_text' // позволяет сделать название настройки лейблом (если не понимаете, что это, можете не использовать), по идее должно быть одинаковым с параметром id
 	);
 	add_settings_field( 'my_text_field', 'Text input', 'true_option_display_settings', $true_page, 'true_section_1', $true_field_params );
- add_action( 'admin_init', 'true_option_settings' );
+}
+	add_action( 'admin_init', 'true_option_settings' );
  
  function true_option_display_settings($args) {
 	extract( $args );

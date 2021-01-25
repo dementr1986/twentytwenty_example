@@ -18,6 +18,12 @@ get_header();
 ?>
 
 <main id="site-content" role="main">
+	<h1><?php
+	$all_options = get_option('true_options');
+	//echo $all_options['my_text'];
+	echo 'hello';
+	?></h1>
+
 
 	<?php
 
