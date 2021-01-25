@@ -777,6 +777,15 @@ function true_option_page(){
 	global $true_page;
 	?><div class="wrap">
 		<h1 class="colorH1">Test header h1</h1>
+		<form method="post" enctype="multipart/form-data" action="options.php">
+			<?php 
+			settings_fields('true_options'); // меняем под себя только здесь (название настроек)
+			do_settings_sections($true_page);
+			?>
+			<p class="submit">  
+				<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />  
+			</p>
+		</form>
 		<script>
 		jQuery(document).ready(function($) {
 			$(".colorH1").on("click",function(){
@@ -789,5 +798,22 @@ function true_option_page(){
 		</script>
 	</div><?php
 }
+
+function true_option_settings() {
+	global $true_page;
+	// Присваиваем функцию валидации ( true_validate_settings() ). Вы найдете её ниже
+	register_setting( 'true_options', 'true_options', 'true_validate_settings' ); // true_options
+ 
+	// Добавляем секцию
+	add_settings_section( 'true_section_1', 'Текстовые поля ввода', '', $true_page );
+ 
+	// Создадим текстовое поле в первой секции
+	$true_field_params = array(
+		'type'      => 'text', // тип
+		'id'        => 'my_text',
+		'desc'      => 'Пример обычного текстового поля.', // описание
+		'label_for' => 'my_text' // позволяет сделать название настройки лейблом (если не понимаете, что это, можете не использовать), по идее должно быть одинаковым с параметром id
+	);
+	add_settings_field( 'my_text_field', 'Текстовое поле', 'true_option_display_settings', $true_page, 'true_section_1', $true_field_params );
  
 
