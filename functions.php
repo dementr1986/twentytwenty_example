@@ -214,6 +214,17 @@ function twentytwenty_register_scripts() {
 
 	wp_enqueue_script( 'twentytwenty-js', get_template_directory_uri() . '/assets/js/index.js', array(), $theme_version, false );
 	wp_script_add_data( 'twentytwenty-js', 'async', true );
+	
+	/*// Регистируем файл с JS скриптом
+    wp_register_script( 'jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js', array(), '1.0', false);
+    */
+    // Подключаем файл с JS скриптом
+    wp_enqueue_script( 'jquery');
+	
+	//Add my script
+	wp_enqueue_script( 'custom', get_template_directory_uri() . '/assets/js/custom.js', array(), $theme_version, false );
+	wp_script_add_data( 'custom', 'async', true );
+	
 
 }
 
@@ -759,60 +770,45 @@ function twentytwenty_get_elements_array() {
 	return apply_filters( 'twentytwenty_get_elements_array', $elements );
 }
 
-$true_page = 'myparameters.php'; // это часть URL страницы, рекомендую использовать строковое значение, т.к. в данном случае не будет зависимости от того, в какой файл вы всё это вставите
+$true_page = 'myparams.php'; // 
  
-/*
- * Функция, добавляющая страницу в пункт меню Настройки
- */
+
 function true_options() {
 	global $true_page;
 	add_options_page( 'ParamasTest', 'ParamasTest', 'manage_options', $true_page, 'true_option_page');  
 }
 add_action('admin_menu', 'true_options');
  
-/**
- * Возвратная функция (Callback)
- */ 
+
 function true_option_page(){
 	global $true_page;
 	?><div class="wrap">
-		<h1 class="colorH1">Test header h1</h1>
 		<form method="post" enctype="multipart/form-data" action="options.php">
 			<?php 
-			settings_fields('true_options'); // меняем под себя только здесь (название настроек)
+			settings_fields('true_options'); //
 			do_settings_sections($true_page);
 			?>
 			<p class="submit">  
 				<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />  
 			</p>
 		</form>
-		<script>
-		jQuery(document).ready(function($) {
-			$(".colorH1").on("click",function(){
-				let r = Math.floor(Math.random() * 254);
-				let g = Math.floor(Math.random() * 254);
-				let b = Math.floor(Math.random() * 254);
-				$(this).css('background-color', 'rgba(' + r +', '+ g + ', '+ b +')');
-			});
-		});
-		</script>
 	</div><?php
 }
 
 function true_option_settings() {
 	global $true_page;
-	// Присваиваем функцию валидации ( true_validate_settings() ). Вы найдете её ниже
-	register_setting( 'true_options', 'true_options', 'true_validate_settings' ); // true_options
+	// 
+	register_setting( 'true_options', 'true_options', 'true_validate_settings' );
  
-	// Добавляем секцию
+	// 
 	add_settings_section( 'true_section_1', 'Text input', '', $true_page );
  
-	// Создадим текстовое поле в первой секции
+	//
 	$true_field_params = array(
-		'type'      => 'text', // тип
+		'type'      => 'text', // 
 		'id'        => 'my_text',
-		'desc'      => 'Example.', // описание
-		'label_for' => 'my_text' // позволяет сделать название настройки лейблом (если не понимаете, что это, можете не использовать), по идее должно быть одинаковым с параметром id
+		'desc'      => 'Example.', //
+		'label_for' => 'my_text' //
 	);
 	add_settings_field( 'my_text_field', 'Text input', 'true_option_display_settings', $true_page, 'true_section_1', $true_field_params );
 }

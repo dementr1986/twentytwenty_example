@@ -18,10 +18,9 @@ get_header();
 ?>
 
 <main id="site-content" role="main">
-	<h1><?php
+	<h1 class="colorH1"><?php
 	$all_options = get_option('true_options');
-	//echo $all_options['my_text'];
-	echo 'hello';
+	echo $all_options['my_text'];
 	?></h1>
 
 
