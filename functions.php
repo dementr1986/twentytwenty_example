@@ -798,7 +798,7 @@ function true_option_page(){
 function true_option_settings() {
 	global $true_page;
 	// 
-	register_setting( 'true_options', 'true_options', 'true_validate_settings' );
+	register_setting( 'true_options', 'true_options', '' );
  
 	// 
 	add_settings_section( 'true_section_1', 'Text input', '', $true_page );
